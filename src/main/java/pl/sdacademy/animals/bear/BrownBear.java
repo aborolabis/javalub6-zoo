@@ -1,25 +1,15 @@
 package pl.sdacademy.animals.bear;
 
 import org.joda.time.DateTime;
+import pl.sdacademy.animals.Time.BearClock;
 
 public class BrownBear extends Bear {
 
-    private DateTime currentTime;
-
-    public BrownBear(int weight, DateTime currentTime) {
+    public BrownBear(int weight, BearClock currentTime) {
         super(weight, currentTime);
     }
 
-    @Override
-    public boolean isAlive() {
-        return super.isAlive();
+    public BrownBear(int weight) {
+        super(weight);
     }
-
-    @Override
-    public int getWeight() {
-        return super.getWeight();
-    }
-
-
-
 }

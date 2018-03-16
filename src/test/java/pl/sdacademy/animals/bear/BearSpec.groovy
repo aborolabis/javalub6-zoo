@@ -1,12 +1,15 @@
 package pl.sdacademy.animals.bear
 
 import org.joda.time.DateTime
+import pl.sdacademy.animals.Time.BearClock
 import spock.lang.Specification
 
 class BearSpec extends Specification {
 
     def "Bear should be alive immediately after creation"() {
         given:
+        def clock = Mock(BearClock)
+        clock.getCurrentTime() >> DateTime.now().plusDays(11)
         Bear bear = testBear
 
         when:
@@ -16,9 +19,9 @@ class BearSpec extends Specification {
         result
 
         where:
-        testBear << [new BlackBear(1, DateTime.now()),
-                     new BrownBear(2, DateTime.now()),
-                     new PolarBear(3, DateTime.now())]
+        testBear << [new BlackBear(1),
+                     new BrownBear(2),
+                     new PolarBear(3)]
     }
 
     def "Bear should be alive if it has eaten within 10 days"() {
@@ -71,6 +74,12 @@ class BearSpec extends Specification {
                      new BrownBear(5, DateTime.now()),
                      new PolarBear(20, DateTime.now())]
         expected << [15, 10, 25]
+    }
+
+    def "Bear should get on weight by 3/4 of waterWeight, which he was drinking"(){
+        given:
+        Bear bear = testBear
+        bear.drink(waterW)
     }
 
 }
