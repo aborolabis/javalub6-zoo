@@ -9,6 +9,7 @@ public abstract class Bear implements Animal {
     private boolean isAlive;
     private DateTime feedingTime;
     private DateTime currentTime;
+    private int foodWeight;
 
     public Bear(int weight, DateTime currentTime) {
         this.weight = weight;
@@ -26,13 +27,14 @@ public abstract class Bear implements Animal {
         return isAlive;
     }
 
-    public void eat() {
+    public void eat(int foodWeight) {
         feedingTime = DateTime.now();
+        this.foodWeight = foodWeight;
     }
 
     @Override
     public int getWeight() {
-        return weight;
+        return weight+foodWeight;
     }
 
 }
