@@ -8,16 +8,17 @@ public abstract class Bear implements Animal {
     private int weight;
     private boolean isAlive;
     private DateTime feedingTime;
+    private DateTime currentTime;
 
-    public Bear(int weight) {
+    public Bear(int weight, DateTime currentTime) {
         this.weight = weight;
         this.isAlive = true;
         this.feedingTime = DateTime.now();
+        this.currentTime = currentTime;
     }
 
     @Override
     public boolean isAlive() {
-        DateTime currentTime = DateTime.now();
         DateTime dateWhenBearShouldBeDead = feedingTime.plusDays(10);
         if(dateWhenBearShouldBeDead.isBefore(currentTime)){
             this.isAlive = false;

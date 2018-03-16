@@ -4,10 +4,10 @@ import org.joda.time.DateTime;
 
 public class BlackBear extends Bear {
 
-    private DateTime feedingTime;
+    private DateTime currentTime;
 
-    public BlackBear(int weight) {
-        super(weight);
+    public BlackBear(int weight, DateTime currentTime) {
+        super(weight, currentTime);
     }
 
     @Override
