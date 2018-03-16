@@ -19,6 +19,15 @@ class BearTest {
         Bear bear = new BlackBear(5);
         bear.eat();
 
+        boolean alive = bear.isAlive();
+
+        assertTrue(alive);
+    }
+
+    @Test
+    void bearShouldBeDeadIfHeDidntEatFor10Days(){
+        Bear bear = new BlackBear(5);
+        bear.eat();
 
 
     }

@@ -1,6 +1,10 @@
 package pl.sdacademy.animals.bear;
 
+import org.joda.time.DateTime;
+
 public class BlackBear extends Bear {
+
+    private DateTime feedingTime;
 
     public BlackBear(int weight) {
         super(weight);
@@ -14,9 +18,5 @@ public class BlackBear extends Bear {
     @Override
     public int getWeight() {
         return super.getWeight();
-    }
-
-    @Override
-    public void eat() {
     }
 }
