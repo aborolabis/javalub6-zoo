@@ -16,7 +16,7 @@ class BearSpec extends Specification {
         result
     }
 
-/*    def "Bear should be alive if it has eaten within 10 days"() {
+    def "Bear should be alive if it has eaten within 10 days"() {
         given:
         int weight = 3
         Bear bear = new BlackBear(weight)
@@ -29,7 +29,7 @@ class BearSpec extends Specification {
         result
     }
 
-    def "Bear should not be alive if it has eaten within more than 10 days"() {
+ /*   def "Bear should not be alive if it has eaten within more than 10 days"() {
 
     }*/
 

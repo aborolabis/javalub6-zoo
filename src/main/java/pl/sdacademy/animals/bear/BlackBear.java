@@ -15,4 +15,8 @@ public class BlackBear extends Bear {
     public int getWeight() {
         return super.getWeight();
     }
+
+    @Override
+    public void eat() {
+    }
 }
