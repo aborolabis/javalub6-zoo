@@ -116,6 +116,32 @@ class BearSpec extends Specification {
         expected << [19, 14.25, 6.65]
     }
 
+    def "Black Bears shouldnt hibernate from 15 of March to 20 of November"(){
+        BearClock clock = new BearClock()
+        Bear bear = new BlackBear(10, clock)
+
+        when:
+        boolean isHibernate = bear.isHibernating()
+
+        then:
+        !isHibernate
+    }
+
+    def "Black Bears should hibernate from 20 of November to 15 of March"(){
+        BearClock clock = new TestClockYears()
+        Bear bear = new BlackBear(10, clock)
+
+        when:
+        boolean isHibernate = bear.isHibernating()
+
+        then:
+        isHibernate
+    }
+
+
+
+
+
     class TestClock extends BearClock {
         int counter = 0;
 
@@ -126,6 +152,13 @@ class BearSpec extends Specification {
                 return DateTime.now().plusDays(20)
             else
                 return DateTime.now()
+        }
+    }
+
+    class TestClockYears extends BearClock{
+        @Override
+        DateTime getCurrentTime() {
+                return DateTime.now().plusMonths(9)
         }
     }
 }

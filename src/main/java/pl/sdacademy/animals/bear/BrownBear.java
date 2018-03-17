@@ -9,6 +9,11 @@ public class BrownBear extends Bear {
         super(weight);
     }
 
+    @Override
+    public boolean isHibernating() {
+        return false;
+    }
+
     public BrownBear(int weight, BearClock currentTime) {
         super(weight, currentTime);
     }

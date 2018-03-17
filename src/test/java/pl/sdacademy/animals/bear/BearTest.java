@@ -189,6 +189,26 @@ class BearTest {
         assertEquals(6.65, newWeight);
     }
 
+    @Test
+    void blackBearShouldHibernateIfItsBetween20OfNov15OfMarch(){
+        TestClockYears clock = new TestClockYears();
+        Bear bear = new BlackBear(10, clock);
+
+        boolean isHibernate = bear.isHibernating();
+
+        assertTrue(isHibernate);
+    }
+
+    @Test
+    void blackBearShouldntHibernateIfItsBetween15OfMarch20OfNov(){
+        BearClock clock = new BearClock();
+        Bear bear = new BlackBear(10, clock);
+
+        boolean isHibernate = bear.isHibernating();
+
+        assertTrue(!isHibernate);
+    }
+
     class TestClock extends BearClock {
         int counter = 0;
 
@@ -199,6 +219,13 @@ class BearTest {
                 return DateTime.now().plusDays(20);
             else
                 return DateTime.now();
+        }
+    }
+
+    class TestClockYears extends BearClock{
+        @Override
+        public DateTime getCurrentTime() {
+            return DateTime.now().plusMonths(9);
         }
     }
 }
