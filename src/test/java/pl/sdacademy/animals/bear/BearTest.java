@@ -12,7 +12,6 @@ class BearTest {
 
     @Test
     void BlackBearShouldBeAliveRightAfterCreation() {
-        BearClock clock = new BearClock();
         Bear bear = new BlackBear(5);
         boolean alive = bear.isAlive();
 
@@ -47,7 +46,6 @@ class BearTest {
 
     @Test
     void BrownBearShouldBeAliveIfHeEatWithin10Days(){
-        DateTime currentTime = DateTime.now().plusDays(8);
         Bear bear = new BrownBear(2);
         bear.eat(0);
 
@@ -69,8 +67,8 @@ class BearTest {
 
     @Test
     void BlackBearShouldBeDeadIfHeDidntEatFor10Days(){
-        DateTime currentTime = DateTime.now().plusDays(20);
-        Bear bear = new BlackBear(5);
+        TestClock clock = new TestClock();
+        Bear bear = new BlackBear(5, clock);
         bear.eat(0);
 
         boolean alive = bear.isAlive();
@@ -80,8 +78,8 @@ class BearTest {
 
     @Test
     void BrownBearShouldBeDeadIfHeDidntEatFor10Days(){
-        DateTime currentTime = DateTime.now().plusDays(20);
-        Bear bear = new BrownBear(1);
+        TestClock clock = new TestClock();
+        Bear bear = new BrownBear(1, clock);
         bear.eat(0);
 
         boolean alive = bear.isAlive();
@@ -91,8 +89,8 @@ class BearTest {
 
     @Test
     void PolarBearShouldBeDeadIfHeDidntEatFor10Days(){
-        DateTime currentTime = DateTime.now().plusDays(20);
-        Bear bear = new PolarBear(1);
+        TestClock clock = new TestClock();
+        Bear bear = new PolarBear(1, clock);
         bear.eat(0);
 
         boolean alive = bear.isAlive();
@@ -102,7 +100,6 @@ class BearTest {
 
     @Test
     void ifBlackBearEatHeWouldGetOnWeight(){
-        DateTime currentTime = DateTime.now();
         Bear bear = new BlackBear(3);
         bear.eat(3);
 
@@ -114,7 +111,6 @@ class BearTest {
 
     @Test
     void ifBrownBearEatHeWouldGetOnWeight(){
-        DateTime currentTime = DateTime.now();
         Bear bear = new BrownBear(1);
         bear.eat(1);
 
@@ -125,7 +121,6 @@ class BearTest {
 
     @Test
     void ifPolarBearEatHeWouldGetOnWeight(){
-        DateTime currentTime = DateTime.now();
         Bear bear = new PolarBear(10);
         bear.eat(5);
 
@@ -136,7 +131,6 @@ class BearTest {
 
     @Test
     void whenBlackBearDrinksHeGetOnWeight(){
-        DateTime currentTime = DateTime.now();
         Bear bear = new BlackBear(12);
         bear.drink(0.7);
 
@@ -147,7 +141,6 @@ class BearTest {
 
     @Test
     void whenBrownBearDrinksHeGetOnWeight(){
-        DateTime currentTime = DateTime.now();
         Bear bear = new BrownBear(20);
         bear.drink(12);
 
@@ -158,7 +151,6 @@ class BearTest {
 
     @Test
     void whenPolarBearDrinksHeGetOnWeight(){
-        DateTime currentTime = DateTime.now();
         Bear bear = new PolarBear(65);
         bear.drink(16);
 
@@ -167,6 +159,46 @@ class BearTest {
         assertEquals(77, newWeight);
     }
 
+    @Test
+    void whenBlackBearPoopHisWeightGoingDownBy5Per(){
+        Bear bear = new BlackBear(20);
+        bear.poop();
 
+        double newWeight = bear.getWeight();
 
+        assertEquals(19, newWeight);
+    }
+
+    @Test
+    void whenBrownBearPoopHisWeightGoingDownBy5Per(){
+        Bear bear = new BrownBear(15);
+        bear.poop();
+
+        double newWeight = bear.getWeight();
+
+        assertEquals(14.25, newWeight);
+    }
+
+    @Test
+    void whenPolarBearPoopHisWeightGoingDownBy5Per(){
+        Bear bear = new PolarBear(7);
+        bear.poop();
+
+        double newWeight = bear.getWeight();
+
+        assertEquals(6.65, newWeight);
+    }
+
+    class TestClock extends BearClock {
+        int counter = 0;
+
+        @Override
+        public DateTime getCurrentTime() {
+            counter++;
+            if (counter > 2)
+                return DateTime.now().plusDays(20);
+            else
+                return DateTime.now();
+        }
+    }
 }

@@ -26,7 +26,8 @@ class BearSpec extends Specification {
 
     def "Bear should be alive if it has eaten within 10 days"() {
         given:
-        Bear bear = testBear
+        BearClock bearClock = clock
+        def bear = testBear
         bear.eat(0)
 
         when:
@@ -36,13 +37,16 @@ class BearSpec extends Specification {
         result
 
         where:
-        testBear << [new BlackBear(3, DateTime.now()),
-                     new BrownBear(5, DateTime.now()),
-                     new PolarBear(1, DateTime.now())]
+        clock << [new BearClock(), new BearClock(), new BearClock()]
+        testBear << [new BlackBear(3, clock),
+                     new BrownBear(5, clock),
+                     new PolarBear(1, clock)]
+
     }
 
     def "Bear should not be alive if it has eaten within more than 10 days"() {
         given:
+        TestClock testClock = clock
         Bear bear = testBear
         bear.eat(0)
 
@@ -53,33 +57,75 @@ class BearSpec extends Specification {
         !result
 
         where:
-        testBear << [new BlackBear(3, DateTime.now().plusDays(20)),
-                     new BrownBear(5, DateTime.now().plusDays(11)),
-                     new PolarBear(1, DateTime.now().plusDays(50))]
+        clock << [new TestClock(), new TestClock(), new TestClock()]
+        testBear << [new BlackBear(3, clock),
+                     new BrownBear(5, clock),
+                     new PolarBear(1, clock)]
     }
 
     def "Bear should get on weight if he eats"(){
         given:
+        BearClock bearClock = clock
         Bear bear = testBear
         bear.eat(5)
 
         when:
-        int newWeight = bear.getWeight()
+        double newWeight = bear.getWeight()
 
         then:
         newWeight == expected
 
         where:
-        testBear << [new BlackBear(10, DateTime.now()),
-                     new BrownBear(5, DateTime.now()),
-                     new PolarBear(20, DateTime.now())]
+        clock << [new BearClock(), new BearClock(), new BearClock()]
+        testBear << [new BlackBear(10, clock),
+                     new BrownBear(5, clock),
+                     new PolarBear(20, clock)]
         expected << [15, 10, 25]
     }
 
     def "Bear should get on weight by 3/4 of waterWeight, which he was drinking"(){
         given:
         Bear bear = testBear
-        bear.drink(waterW)
+        bear.drink(12)
+
+        when:
+        double newWeight = bear.getWeight()
+
+        then:
+        newWeight == expected
+
+        where:
+        testBear << [new BlackBear(20), new BrownBear(10), new PolarBear(102)]
+        expected << [29, 19, 111]
     }
 
+    def "when bear poop his weight goes down by 5 %"(){
+        BearClock bearClock = clock
+        Bear bear = testBear
+        bear.poop()
+
+        when:
+        double newWeight = bear.getWeight()
+
+        then:
+        newWeight == expected
+
+        where:
+        clock << [new BearClock(), new BearClock(), new BearClock()]
+        testBear << [new BlackBear(20, clock), new BrownBear(15, clock), new PolarBear(7, clock)]
+        expected << [19, 14.25, 6.65]
+    }
+
+    class TestClock extends BearClock {
+        int counter = 0;
+
+        @Override
+        DateTime getCurrentTime() {
+            counter++
+            if (counter > 2)
+                return DateTime.now().plusDays(20)
+            else
+                return DateTime.now()
+        }
+    }
 }

@@ -5,11 +5,12 @@ import pl.sdacademy.animals.Time.BearClock;
 
 public class BrownBear extends Bear {
 
+    public BrownBear(int weight) {
+        super(weight);
+    }
+
     public BrownBear(int weight, BearClock currentTime) {
         super(weight, currentTime);
     }
 
-    public BrownBear(int weight) {
-        super(weight);
-    }
 }

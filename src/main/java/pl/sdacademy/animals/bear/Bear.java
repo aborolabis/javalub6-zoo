@@ -12,19 +12,21 @@ public abstract class Bear implements Animal {
     private BearClock clock;
     private int foodWeight;
     private double waterWeight;
+    private double loosingWeight;
 
     public Bear(int weight, BearClock clock) {
         this.weight = weight;
         this.isAlive = true;
-        this.feedingTime = clock.getCurrentTime();
         this.clock = clock;
+        this.feedingTime = clock.getCurrentTime();
+
     }
 
     public Bear(int weight) {
         this.weight = weight;
         this.isAlive = true;
-        this.feedingTime = clock.getCurrentTime();
         this.clock = new BearClock();
+        this.feedingTime = this.clock.getCurrentTime();
     }
 
     @Override
@@ -47,7 +49,11 @@ public abstract class Bear implements Animal {
 
     @Override
     public double getWeight() {
-        return weight+foodWeight+(waterWeight*3/4);
+        return weight+foodWeight+(waterWeight*3/4)-loosingWeight;
+    }
+
+    public void poop(){
+        this.loosingWeight = (this.weight * 0.05);
     }
 
 }
