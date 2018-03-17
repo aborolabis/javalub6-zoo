@@ -4,8 +4,6 @@ import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
 import pl.sdacademy.animals.Time.BearClock;
 
-import java.time.Clock;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class BearTest {
@@ -191,7 +189,7 @@ class BearTest {
 
     @Test
     void blackBearShouldHibernateIfItsBetween20OfNov15OfMarch(){
-        TestClockYears clock = new TestClockYears();
+        TestClockBlackBear clock = new TestClockBlackBear();
         Bear bear = new BlackBear(10, clock);
 
         boolean isHibernate = bear.isHibernating();
@@ -203,6 +201,26 @@ class BearTest {
     void blackBearShouldntHibernateIfItsBetween15OfMarch20OfNov(){
         BearClock clock = new BearClock();
         Bear bear = new BlackBear(10, clock);
+
+        boolean isHibernate = bear.isHibernating();
+
+        assertTrue(!isHibernate);
+    }
+
+    @Test
+    void polarBearShouldHibernateIfItsBetween5OfMay10OfOct(){
+        BearClock clock = new TestClockPolarBear();
+        Bear bear = new PolarBear(10, clock);
+
+        boolean isHibernate = bear.isHibernating();
+
+        assertTrue(isHibernate);
+    }
+
+    @Test
+    void polarBearShouldntHibernateIfItsBetween10OfOct5OfMay(){
+        BearClock clock = new BearClock();
+        Bear bear = new PolarBear(10, clock);
 
         boolean isHibernate = bear.isHibernating();
 
@@ -222,10 +240,17 @@ class BearTest {
         }
     }
 
-    class TestClockYears extends BearClock{
+    class TestClockBlackBear extends BearClock{
         @Override
         public DateTime getCurrentTime() {
             return DateTime.now().plusMonths(9);
+        }
+    }
+
+    class TestClockPolarBear extends BearClock{
+        @Override
+        public DateTime getCurrentTime() {
+            return DateTime.now().plusMonths(4);
         }
     }
 }

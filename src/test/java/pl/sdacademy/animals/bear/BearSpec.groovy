@@ -13,7 +13,7 @@ class BearSpec extends Specification {
         Bear bear = testBear
 
         when:
-        boolean  result = bear.isAlive()
+        boolean result = bear.isAlive()
 
         then:
         result
@@ -63,7 +63,7 @@ class BearSpec extends Specification {
                      new PolarBear(1, clock)]
     }
 
-    def "Bear should get on weight if he eats"(){
+    def "Bear should get on weight if he eats"() {
         given:
         BearClock bearClock = clock
         Bear bear = testBear
@@ -83,7 +83,7 @@ class BearSpec extends Specification {
         expected << [15, 10, 25]
     }
 
-    def "Bear should get on weight by 3/4 of waterWeight, which he was drinking"(){
+    def "Bear should get on weight by 3/4 of waterWeight, which he was drinking"() {
         given:
         Bear bear = testBear
         bear.drink(12)
@@ -99,7 +99,8 @@ class BearSpec extends Specification {
         expected << [29, 19, 111]
     }
 
-    def "when bear poop his weight goes down by 5 %"(){
+    def "when bear poop his weight goes down by 5 %"() {
+        given:
         BearClock bearClock = clock
         Bear bear = testBear
         bear.poop()
@@ -116,7 +117,8 @@ class BearSpec extends Specification {
         expected << [19, 14.25, 6.65]
     }
 
-    def "Black Bears shouldnt hibernate from 15 of March to 20 of November"(){
+    def "Black Bears shouldnt hibernate from 15 of March to 20 of November"() {
+        given:
         BearClock clock = new BearClock()
         Bear bear = new BlackBear(10, clock)
 
@@ -127,8 +129,9 @@ class BearSpec extends Specification {
         !isHibernate
     }
 
-    def "Black Bears should hibernate from 20 of November to 15 of March"(){
-        BearClock clock = new TestClockYears()
+    def "Black Bears should hibernate from 20 of November to 15 of March"() {
+        given:
+        BearClock clock = new TestClockBlackBears()
         Bear bear = new BlackBear(10, clock)
 
         when:
@@ -138,8 +141,29 @@ class BearSpec extends Specification {
         isHibernate
     }
 
+    def "Polar Bears should hibernate from 5 of May to 10 of October"() {
+        given:
+        BearClock clock = new TestClockPolarBears()
+        Bear bear = new PolarBear(10, clock)
 
+        when:
+        boolean isHibernate = bear.isHibernating()
 
+        then:
+        isHibernate
+    }
+
+    def "Polar Bears shouldnt hibernate from 10 of October to 5 of May"(){
+        given:
+        BearClock clock = new BearClock()
+        Bear bear = new PolarBear(10, clock)
+
+        when:
+        boolean isHibernate = bear.isHibernating()
+
+        then:
+        !isHibernate
+    }
 
 
     class TestClock extends BearClock {
@@ -155,10 +179,17 @@ class BearSpec extends Specification {
         }
     }
 
-    class TestClockYears extends BearClock{
+    class TestClockBlackBears extends BearClock {
         @Override
         DateTime getCurrentTime() {
-                return DateTime.now().plusMonths(9)
+            return DateTime.now().plusMonths(9)
+        }
+    }
+
+    class TestClockPolarBears extends BearClock {
+        @Override
+        DateTime getCurrentTime() {
+            return DateTime.now().plusMonths(4)
         }
     }
 }
