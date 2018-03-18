@@ -20,8 +20,27 @@ public class BlackBear extends Bear {
 
     @Override
     public boolean isHibernating() {
-        DateTime startHibernating = new DateTime(clock.getCurrentTime().getYear(), 11, 20, 00, 00);
-        DateTime endHibernating = new DateTime(clock.getCurrentTime().getYear(), 3, 15, 00, 00);
+        DateTime startHibernating = new DateTime(clock.getYear(), 11, 20, 0, 0);
+        DateTime endHibernating = new DateTime(clock.getYear(), 3, 15, 0, 0);
         return clock.getCurrentTime().isBefore(endHibernating) || clock.getCurrentTime().isAfter(startHibernating);
     }
+
+    @Override
+    public void eat(int foodWeight) throws BearHibernatingException {
+        if(!isHibernating()){
+            super.eat(foodWeight);
+        } else {
+            throw new BearHibernatingException();
+        }
+    }
+
+    @Override
+    public void drink(double waterWeight) throws BearHibernatingException {
+        if(!isHibernating()){
+            super.drink(waterWeight);
+        } else {
+            throw new BearHibernatingException();
+        }
+    }
+
 }

@@ -32,24 +32,24 @@ public abstract class Bear implements Animal {
     @Override
     public boolean isAlive() {
         DateTime dateWhenBearShouldBeDead = feedingTime.plusDays(10);
-        if(dateWhenBearShouldBeDead.isBefore(clock.getCurrentTime())){
+        if(clock.getCurrentTime().isAfter(dateWhenBearShouldBeDead)){
             this.isAlive = false;
         }
         return isAlive;
     }
 
-    public void eat(int foodWeight) {
+    public void eat(int foodWeight) throws BearHibernatingException {
         feedingTime = clock.getCurrentTime();
         this.foodWeight = foodWeight;
     }
 
-    public void drink(double waterWeight){
-        this.waterWeight = waterWeight;
+    public void drink(double waterWeight) throws BearHibernatingException {
+        this.waterWeight = waterWeight *3/4;
     }
 
     @Override
     public double getWeight() {
-        return weight+foodWeight+(waterWeight*3/4)-loosingWeight;
+        return weight+foodWeight+waterWeight-loosingWeight;
     }
 
     public void poop(){

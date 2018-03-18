@@ -165,6 +165,54 @@ class BearSpec extends Specification {
         !isHibernate
     }
 
+    def "Black Bear should throw an Exception if we want to feed him while hibernating"(){
+        given:
+        BearClock clock = new TestClockBlackBears()
+        Bear bear = new BlackBear(10, clock)
+
+        when:
+        bear.eat(10)
+
+        then:
+        thrown BearHibernatingException
+    }
+
+    def "Black Bear should throw an Exception if we want to let him drink while hibernating"(){
+        given:
+        BearClock clock = new TestClockBlackBears()
+        Bear bear = new BlackBear(10, clock)
+
+        when:
+        bear.drink(10)
+
+        then:
+        thrown BearHibernatingException
+    }
+
+    def "Polar Bear should throw an Exception if we want to feed him while hibernating"(){
+        given:
+        BearClock clock = new TestClockPolarBears()
+        Bear bear = new PolarBear(10, clock)
+
+        when:
+        bear.eat(10)
+
+        then:
+        thrown BearHibernatingException
+    }
+
+    def "Polar Bear should throw an Exception if we want to let him drink while hibernating"(){
+        given:
+        BearClock clock = new TestClockPolarBears()
+        Bear bear = new PolarBear(10, clock)
+
+        when:
+        bear.drink(10)
+
+        then:
+        thrown BearHibernatingException
+    }
+
 
     class TestClock extends BearClock {
         int counter = 0;
@@ -172,7 +220,7 @@ class BearSpec extends Specification {
         @Override
         DateTime getCurrentTime() {
             counter++
-            if (counter > 2)
+            if (counter > 0)
                 return DateTime.now().plusDays(20)
             else
                 return DateTime.now()

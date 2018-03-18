@@ -33,7 +33,7 @@ class BearTest {
     }
 
     @Test
-    void BlackBearShouldBeAliveIfHeEatWithin10Days(){
+    void BlackBearShouldBeAliveIfHeEatWithin10Days() throws BearHibernatingException {
         Bear bear = new BlackBear(3);
         bear.eat(0);
 
@@ -43,7 +43,7 @@ class BearTest {
     }
 
     @Test
-    void BrownBearShouldBeAliveIfHeEatWithin10Days(){
+    void BrownBearShouldBeAliveIfHeEatWithin10Days() throws BearHibernatingException {
         Bear bear = new BrownBear(2);
         bear.eat(0);
 
@@ -53,7 +53,7 @@ class BearTest {
     }
 
     @Test
-    void PolarBearShouldBeAliveIfHeEatWithin10Days(){
+    void PolarBearShouldBeAliveIfHeEatWithin10Days() throws BearHibernatingException {
         DateTime currentTime = DateTime.now().plusDays(8);
         Bear bear = new PolarBear(5);
         bear.eat(0);
@@ -64,7 +64,7 @@ class BearTest {
     }
 
     @Test
-    void BlackBearShouldBeDeadIfHeDidntEatFor10Days(){
+    void BlackBearShouldBeDeadIfHeDidntEatFor10Days() throws BearHibernatingException {
         TestClock clock = new TestClock();
         Bear bear = new BlackBear(5, clock);
         bear.eat(0);
@@ -75,7 +75,7 @@ class BearTest {
     }
 
     @Test
-    void BrownBearShouldBeDeadIfHeDidntEatFor10Days(){
+    void BrownBearShouldBeDeadIfHeDidntEatFor10Days() throws BearHibernatingException {
         TestClock clock = new TestClock();
         Bear bear = new BrownBear(1, clock);
         bear.eat(0);
@@ -86,7 +86,7 @@ class BearTest {
     }
 
     @Test
-    void PolarBearShouldBeDeadIfHeDidntEatFor10Days(){
+    void PolarBearShouldBeDeadIfHeDidntEatFor10Days() throws BearHibernatingException {
         TestClock clock = new TestClock();
         Bear bear = new PolarBear(1, clock);
         bear.eat(0);
@@ -97,7 +97,7 @@ class BearTest {
     }
 
     @Test
-    void ifBlackBearEatHeWouldGetOnWeight(){
+    void ifBlackBearEatHeWouldGetOnWeight() throws BearHibernatingException {
         Bear bear = new BlackBear(3);
         bear.eat(3);
 
@@ -108,7 +108,7 @@ class BearTest {
     }
 
     @Test
-    void ifBrownBearEatHeWouldGetOnWeight(){
+    void ifBrownBearEatHeWouldGetOnWeight() throws BearHibernatingException {
         Bear bear = new BrownBear(1);
         bear.eat(1);
 
@@ -118,7 +118,7 @@ class BearTest {
     }
 
     @Test
-    void ifPolarBearEatHeWouldGetOnWeight(){
+    void ifPolarBearEatHeWouldGetOnWeight() throws BearHibernatingException {
         Bear bear = new PolarBear(10);
         bear.eat(5);
 
@@ -128,7 +128,7 @@ class BearTest {
     }
 
     @Test
-    void whenBlackBearDrinksHeGetOnWeight(){
+    void whenBlackBearDrinksHeGetOnWeight() throws BearHibernatingException {
         Bear bear = new BlackBear(12);
         bear.drink(0.7);
 
@@ -138,7 +138,7 @@ class BearTest {
     }
 
     @Test
-    void whenBrownBearDrinksHeGetOnWeight(){
+    void whenBrownBearDrinksHeGetOnWeight() throws BearHibernatingException {
         Bear bear = new BrownBear(20);
         bear.drink(12);
 
@@ -148,7 +148,7 @@ class BearTest {
     }
 
     @Test
-    void whenPolarBearDrinksHeGetOnWeight(){
+    void whenPolarBearDrinksHeGetOnWeight() throws BearHibernatingException {
         Bear bear = new PolarBear(65);
         bear.drink(16);
 
